@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test API - Spotify Clone</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1e1e1e;
+      color: white;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #1db954;
+      margin-bottom: 30px;
+    }
+
+    .test-section {
+      background: #282828;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .test-section h2 {
+      color: #1db954;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #1db954;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background: #1ed760;
+    }
+
+    .result {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .success {
+      color: #1db954;
+    }
+
+    .error {
+      color: #ff4d4d;
+    }
+
+    input[type="file"] {
+      margin: 10px 0;
+      color: white;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .status.online {
+      background: #1db954;
+      color: black;
+    }
+
+    .status.offline {
+      background: #ff4d4d;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🧪 Test API - Spotify Clone</h1>
+
+    <!-- Test Database Connection -->
+    <div class="test-section">
+      <h2>1. Test Database Connection <span class="status" id="dbStatus">Checking...</span></h2>
+      <button onclick="testDatabase()">Test Connection</button>
+      <div class="result" id="dbResult">Klik tombol untuk test koneksi database...</div>
+    </div>
+
+    <!-- Test Get Songs -->
+    <div class="test-section">
+      <h2>2. Test Get Songs API</h2>
+      <button onclick="testGetSongs()">Get All Songs</button>
+      <div class="result" id="getSongsResult">Klik tombol untuk mengambil data lagu...</div>
+    </div>
+
+    <!-- Test Upload Song -->
+    <div class="test-section">
+      <h2>3. Test Upload Song API</h2>
+      <input type="text" id="testTitle" placeholder="Judul Lagu" value="Test Song">
+      <input type="text" id="testArtist" placeholder="Nama Artis" value="Test Artist">
+      <input type="file" id="testBanner" accept="image/*">
+      <input type="file" id="testAudio" accept="audio/*">
+      <button onclick="testUpload()">Upload Test Song</button>
+      <div class="result" id="uploadResult">Isi form dan klik tombol untuk test upload...</div>
+    </div>
+
+    <!-- Test Delete Song -->
+    <div class="test-section">
+      <h2>4. Test Delete Song API</h2>
+      <input type="text" id="deleteSongId" placeholder="Song ID" value="1">
+      <button onclick="testDelete()">Delete Song</button>
+      <div class="result" id="deleteResult">Masukkan ID lagu dan klik tombol untuk test delete...</div>
+    </div>
+
+    <!-- System Info -->
+    <div class="test-section">
+      <h2>5. System Information</h2>
+      <button onclick="getSystemInfo()">Get Info</button>
+      <div class="result" id="systemInfo">Klik tombol untuk melihat info sistem...</div>
+    </div>
+
+  </div>
+
+  <script>
+    // Test Database Connection
+    async function testDatabase() {
+      const result = document.getElementById('dbResult');
+      const status = document.getElementById('dbStatus');
+      
+      result.textContent = 'Testing connection...';
+      
+      try {
+        const response = await fetch('api/songs.php');
+        const data = await response.json();
+        
+        if (data.success !== undefined) {
+          result.innerHTML = '<span class="success">✅ Database Connected!</span>\n' + 
+                            JSON.stringify(data, null, 2);
+          status.textContent = 'Online';
+          status.className = 'status online';
+        } else {
+          throw new Error('Invalid response');
+        }
+      } catch (error) {
+        result.innerHTML = '<span class="error">❌ Connection Failed!</span>\n' + 
+                          'Error: ' + error.message;
+        status.textContent = 'Offline';
+        status.className = 'status offline';
+      }
+    }
+
+    // Test Get Songs
+    async function testGetSongs() {
+      const result = document.getElementById('getSongsResult');
+      result.textContent = 'Loading songs...';
+      
+      try {
+        const response = await fetch('api/songs.php');
+        const data = await response.json();
+        
+        if (data.success) {
+          result.innerHTML = '<span class="success">✅ Success!</span>\n' +
+                            'Total Songs: ' + data.data.length + '\n\n' +
+                            JSON.stringify(data, null, 2);
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        result.innerHTML = '<span class="error">❌ Error!</span>\n' + error.message;
+      }
+    }
+
+    // Test Upload
+    async function testUpload() {
+      const result = document.getElementById('uploadResult');
+      result.textContent = 'Uploading...';
+      
+      const formData = new FormData();
+      formData.append('title', document.getElementById('testTitle').value);
+      formData.append('artist', document.getElementById('testArtist').value);
+      
+      const bannerFile = document.getElementById('testBanner').files[0];
+      const audioFile = document.getElementById('testAudio').files[0];
+      
+      if (!audioFile) {
+        result.innerHTML = '<span class="error">❌ File audio wajib diupload!</span>';
+        return;
+      }
+      
+      if (bannerFile) formData.append('banner', bannerFile);
+      formData.append('audio', audioFile);
+      
+      try {
+        const response = await fetch('api/upload.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          result.innerHTML = '<span class="success">✅ Upload Success!</span>\n' +
+                            JSON.stringify(data, null, 2);
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        result.innerHTML = '<span class="error">❌ Upload Failed!</span>\n' + error.message;
+      }
+    }
+
+    // Test Delete
+    async function testDelete() {
+      const result = document.getElementById('deleteResult');
+      const songId = document.getElementById('deleteSongId').value;
+      
+      if (!songId) {
+        result.innerHTML = '<span class="error">❌ Song ID wajib diisi!</span>';
+        return;
+      }
+      
+      result.textContent = 'Deleting...';
+      
+      try {
+        const response = await fetch(`api/songs.php?id=${songId}`, {
+          method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          result.innerHTML = '<span class="success">✅ Delete Success!</span>\n' +
+                            JSON.stringify(data, null, 2);
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        result.innerHTML = '<span class="error">❌ Delete Failed!</span>\n' + error.message;
+      }
+    }
+
+    // Get System Info
+    function getSystemInfo() {
+      const result = document.getElementById('systemInfo');
+      
+      const info = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        cookieEnabled: navigator.cookieEnabled,
+        onLine: navigator.onLine,
+        screenResolution: `${screen.width}x${screen.height}`,
+        windowSize: `${window.innerWidth}x${window.innerHeight}`,
+        currentURL: window.location.href,
+        apiBaseURL: window.location.origin + '/api/'
+      };
+      
+      result.innerHTML = '<span class="success">✅ System Info:</span>\n' +
+                        JSON.stringify(info, null, 2);
+    }
+
+    // Auto test database on load
+    window.onload = function() {
+      testDatabase();
+    };
+  </script>
+
+</body>
+</html>

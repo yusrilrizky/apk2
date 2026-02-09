@@ -1,0 +1,13 @@
+{
+  "name": "spotify-clone/music-app",
+  "description": "Aplikasi musik dengan upload lagu dan database",
+  "type": "project",
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

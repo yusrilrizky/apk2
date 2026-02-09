@@ -1,0 +1,321 @@
+========================================
+  CARA TEST MYTUBE DI HP FISIK
+========================================
+
+📱 APK sudah berhasil di-build!
+❌ Tapi tidak bisa terhubung ke server
+
+SOLUSI: Ganti URL & pastikan setup benar!
+
+========================================
+  MASALAH & SOLUSI
+========================================
+
+❌ MASALAH:
+   URL di app masih: http://10.0.2.2:8000/login.html
+   
+   URL ini HANYA untuk emulator!
+   Tidak bisa dipakai di HP fisik!
+
+✅ SOLUSI:
+   URL sudah diganti ke: http://192.168.1.2:8000/login.html
+   
+   IP komputer Anda: 192.168.1.2
+
+========================================
+  LANGKAH-LANGKAH LENGKAP
+========================================
+
+STEP 1: Pastikan Server PHP Jalan
+----------------------------------
+
+1. Buka Command Prompt/Terminal
+2. Masuk ke folder project web Anda
+3. Jalankan server:
+
+   php -S 0.0.0.0:8000
+
+   PENTING: Gunakan 0.0.0.0 bukan 127.0.0.1!
+   
+   0.0.0.0 = bisa diakses dari HP
+   127.0.0.1 = hanya bisa diakses dari komputer
+
+4. Server jalan, jangan ditutup!
+
+---
+
+STEP 2: Test Server dari Browser Komputer
+------------------------------------------
+
+1. Buka browser di komputer
+2. Akses: http://192.168.1.2:8000/login.html
+3. Pastikan halaman login muncul!
+
+Jika tidak muncul:
+- Cek server PHP jalan
+- Cek file login.html ada
+- Cek port 8000 tidak dipakai aplikasi lain
+
+---
+
+STEP 3: Pastikan HP & Komputer 1 WiFi
+--------------------------------------
+
+✅ HP dan komputer HARUS terhubung ke WiFi yang SAMA!
+
+Cara cek:
+- Komputer: Settings → Network → WiFi
+- HP: Settings → WiFi
+
+Contoh:
+✅ Komputer: WiFi "Rumah123"
+✅ HP: WiFi "Rumah123"
+
+❌ Komputer: WiFi "Rumah123"
+❌ HP: Data Seluler (4G/5G)
+
+---
+
+STEP 4: Test dari Browser HP
+-----------------------------
+
+1. Buka browser di HP (Chrome/Firefox)
+2. Akses: http://192.168.1.2:8000/login.html
+3. Pastikan halaman login muncul!
+
+Jika tidak muncul:
+- Cek HP & komputer 1 WiFi
+- Cek firewall tidak block port 8000
+- Cek server PHP masih jalan
+
+---
+
+STEP 5: Build APK Baru
+-----------------------
+
+URL sudah diganti, sekarang build APK baru!
+
+cd mytube_app
+flutter build apk --release
+
+Atau double click: BUILD_MYTUBE_APK.bat
+
+Tunggu 5-10 menit...
+
+APK baru ada di:
+mytube_app/build/app/outputs/flutter-apk/app-release.apk
+
+---
+
+STEP 6: Install APK Baru di HP
+-------------------------------
+
+1. Kirim APK baru ke HP (WhatsApp/Email/USB)
+2. Hapus APK lama (jika sudah terinstall)
+3. Install APK baru
+4. Buka aplikasi MyTube
+
+---
+
+STEP 7: Test Aplikasi
+----------------------
+
+✅ Splash screen muncul (2 detik)
+✅ Halaman login muncul
+✅ Bisa login/register
+✅ Bisa putar musik
+✅ Favorit tersimpan
+
+========================================
+  TROUBLESHOOTING
+========================================
+
+❌ "Tidak Dapat Terhubung"
+--------------------------
+
+Cek:
+1. Server PHP jalan?
+   → php -S 0.0.0.0:8000
+
+2. HP & komputer 1 WiFi?
+   → Cek WiFi settings
+
+3. URL sudah benar?
+   → http://192.168.1.2:8000/login.html
+
+4. Test di browser HP dulu?
+   → Buka URL di Chrome HP
+
+5. Firewall block?
+   → Matikan firewall sementara
+
+---
+
+❌ "ERR_CONNECTION_REFUSED"
+---------------------------
+
+Artinya: Server tidak jalan atau port salah
+
+Solusi:
+1. Pastikan server jalan: php -S 0.0.0.0:8000
+2. Cek port 8000 tidak dipakai aplikasi lain
+3. Restart server
+
+---
+
+❌ "ERR_CONNECTION_TIMED_OUT"
+-----------------------------
+
+Artinya: HP tidak bisa akses komputer
+
+Solusi:
+1. Pastikan HP & komputer 1 WiFi
+2. Matikan firewall Windows sementara
+3. Test ping dari HP ke komputer
+
+---
+
+❌ Halaman Blank/Putih
+----------------------
+
+Solusi:
+1. Cek URL sudah benar
+2. Cek server jalan
+3. Test di browser HP dulu
+4. Rebuild APK
+
+========================================
+  CEK FIREWALL WINDOWS
+========================================
+
+Firewall bisa block koneksi dari HP!
+
+Cara matikan sementara:
+1. Windows Security
+2. Firewall & network protection
+3. Private network → OFF (sementara)
+
+Atau buat rule:
+1. Windows Defender Firewall
+2. Advanced settings
+3. Inbound Rules → New Rule
+4. Port → TCP → 8000
+5. Allow connection
+
+========================================
+  CEK KONEKSI HP KE KOMPUTER
+========================================
+
+Test ping dari HP:
+
+1. Install app "Network Utilities" di HP
+2. Ping: 192.168.1.2
+3. Jika berhasil: Reply from 192.168.1.2
+4. Jika gagal: Request timeout
+
+Jika gagal ping:
+- Firewall block
+- Beda WiFi
+- Router block
+
+========================================
+  COMMAND LENGKAP
+========================================
+
+# 1. Jalankan server PHP
+php -S 0.0.0.0:8000
+
+# 2. Test di browser komputer
+http://192.168.1.2:8000/login.html
+
+# 3. Test di browser HP
+http://192.168.1.2:8000/login.html
+
+# 4. Build APK baru
+cd mytube_app
+flutter build apk --release
+
+# 5. Install di HP
+# (kirim APK ke HP)
+
+========================================
+  CHECKLIST
+========================================
+
+☑️ Server PHP jalan (0.0.0.0:8000)
+☑️ Test di browser komputer (berhasil)
+☑️ HP & komputer 1 WiFi
+☑️ Test di browser HP (berhasil)
+☑️ URL di app_config.dart sudah diganti
+☑️ Build APK baru
+☑️ Install APK baru di HP
+☑️ Aplikasi bisa terhubung!
+
+========================================
+  INFO PENTING
+========================================
+
+IP Komputer Anda: 192.168.1.2
+
+URL untuk HP: http://192.168.1.2:8000/login.html
+
+File config: mytube_app/lib/config/app_config.dart
+
+Server command: php -S 0.0.0.0:8000
+
+========================================
+  JIKA IP KOMPUTER BERUBAH
+========================================
+
+IP bisa berubah jika:
+- Restart komputer
+- Restart router
+- Ganti WiFi
+
+Cara cek IP baru:
+ipconfig
+
+Cari: IPv4 Address
+
+Ganti URL di: mytube_app/lib/config/app_config.dart
+
+Build APK baru!
+
+========================================
+  TIPS
+========================================
+
+💡 Selalu test di browser HP dulu sebelum build APK
+
+💡 Gunakan IP static di router untuk IP tidak berubah
+
+💡 Simpan command server: php -S 0.0.0.0:8000
+
+💡 Untuk production, gunakan server online (HTTPS)
+
+💡 Jangan lupa 1 WiFi!
+
+========================================
+  KESIMPULAN
+========================================
+
+✅ URL sudah diganti ke: http://192.168.1.2:8000/login.html
+
+✅ Sekarang build APK baru:
+   cd mytube_app
+   flutter build apk --release
+
+✅ Install APK baru di HP
+
+✅ Pastikan:
+   - Server jalan (php -S 0.0.0.0:8000)
+   - HP & komputer 1 WiFi
+   - Test di browser HP dulu
+
+✅ Aplikasi akan terhubung!
+
+========================================
+
+Selamat testing! 🎵
+
+========================================

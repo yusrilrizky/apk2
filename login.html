@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | MyTube</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
+    url("eh.jpg") center/cover no-repeat;
+  color:white;
+}
+
+/* CARD */
+.login-card{
+  width:100%;
+  max-width:380px;
+  background:rgba(20,20,20,.9);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+/* IMAGE */
+.login-image{
+  height:150px;
+  background:url("ga.jpg") center/cover no-repeat;
+}
+
+/* CONTENT */
+.login-content{
+  padding:22px;
+  text-align:center;
+}
+
+.logo{
+  font-size:26px;
+  color:#1db954;
+}
+.logo span{ color:white; }
+
+.subtitle{
+  font-size:14px;
+  color:#aaa;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#1db954;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+.toggle{
+  margin-top:14px;
+  font-size:13px;
+  color:#ccc;
+  cursor:pointer;
+}
+.toggle span{
+  color:#1db954;
+  font-weight:bold;
+}
+
+.music-control{
+  margin-top:12px;
+  font-size:13px;
+  color:#1db954;
+  cursor:pointer;
+}
+
+.error{
+  color:#ff5c5c;
+  font-size:13px;
+  display:none;
+  margin-bottom:8px;
+}
+
+.success{
+  color:#1db954;
+  font-size:13px;
+  display:none;
+  margin-bottom:8px;
+}
+
+/* FOOTER */
+.footer-login{
+  margin-top:16px;
+  font-size:11px;
+  color:#aaa;
+}
+.footer-login a{
+  color:#1db954;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="loginMusic" autoplay loop>
+  <source src="no.mp3" type="audio/mpeg">
+</audio>
+
+<div class="login-card">
+
+  <div class="login-image"></div>
+
+  <div class="login-content">
+    <div class="logo">My<span>Tube</span></div>
+    <div class="subtitle" id="formTitle">Masuk ke akun kamu</div>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+
+    <!-- LOGIN/REGISTER FORM -->
+    <div id="mainForm">
+      <input id="username" placeholder="Username">
+      <input id="email" type="email" placeholder="Email (opsional)" style="display:none;">
+      <input id="password" type="password" placeholder="Password">
+
+      <button onclick="submitForm()" id="submitBtn">Masuk</button>
+    </div>
+
+    <div class="toggle" onclick="toggleMode()">
+      Belum punya akun? <span id="toggleText">Daftar</span>
+    </div>
+
+    <div class="music-control" onclick="toggleMusic()">🎵 Play / Pause Musik</div>
+
+    
+    <div class="footer-login">
+      © 2026 MyTube <br>
+      Kontak Admin:
+      <a href="https://wa.me/6282297706541?text=Hai%20save%20dong" target="_blank">
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* MUSIC */
+const music = document.getElementById("loginMusic");
+music.volume = 0.4;
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
+}
+
+/* LOGIN - TANPA OTP */
+let isLogin = true;
+const title = document.getElementById("formTitle");
+const toggleText = document.getElementById("toggleText");
+const errorMsg = document.getElementById("errorMsg");
+const successMsg = document.getElementById("successMsg");
+const emailInput = document.getElementById("email");
+const submitBtn = document.getElementById("submitBtn");
+
+function toggleMode(){
+  isLogin = !isLogin;
+  title.innerText = isLogin ? "Masuk ke akun kamu" : "Buat akun baru";
+  toggleText.innerText = isLogin ? "Daftar" : "Masuk";
+  emailInput.style.display = isLogin ? "none" : "block";
+  submitBtn.textContent = isLogin ? "Masuk" : "Daftar";
+  hideMessages();
+}
+
+function submitForm(){
+  const u = username.value.trim();
+  const p = password.value.trim();
+  const e = email.value.trim();
+
+  if(!u || !p){
+    showError("Username & password wajib diisi");
+    return;
+  }
+
+  if(isLogin){
+    // LOGIN
+    const savedUser = localStorage.getItem("mytube_user");
+    const savedPass = localStorage.getItem("mytube_pass");
+    
+    if(u === savedUser && p === savedPass){
+      sessionStorage.setItem("mytube_login","true");
+      showSuccess("✅ Login berhasil! Mengalihkan...");
+      setTimeout(() => {
+        location.href="index.html";
+      }, 1000);
+    }else{
+      showError("Login gagal. Username atau password salah.");
+    }
+  }else{
+    // REGISTER - LANGSUNG TANPA OTP
+    if(p.length < 4){
+      showError("Password minimal 4 karakter");
+      return;
+    }
+
+    // Simpan data user langsung
+    localStorage.setItem("mytube_user", u);
+    localStorage.setItem("mytube_pass", p);
+    if(e) localStorage.setItem("mytube_email", e);
+    
+    showSuccess("✅ Registrasi berhasil! Silakan login...");
+    
+    setTimeout(() => {
+      isLogin = true;
+      toggleMode();
+      document.getElementById("username").value = u;
+      document.getElementById("password").value = "";
+    }, 2000);
+  }
+}
+
+function showError(msg){
+  errorMsg.innerText = msg;
+  errorMsg.style.display = "block";
+  successMsg.style.display = "none";
+}
+
+function showSuccess(msg){
+  successMsg.innerText = msg;
+  successMsg.style.display = "block";
+  errorMsg.style.display = "none";
+}
+
+function hideMessages(){
+  errorMsg.style.display = "none";
+  successMsg.style.display = "none";
+}
+
+// Enter key support
+document.addEventListener('keypress', function(e){
+  if(e.key === 'Enter'){
+    submitForm();
+  }
+});
+</script>
+
+</body>
+</html>

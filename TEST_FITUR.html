@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Fitur MyTube</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: white;
+    }
+    .test-section {
+      background: #282828;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      border-left: 4px solid #1db954;
+    }
+    h1 {
+      color: #1db954;
+      text-align: center;
+    }
+    h2 {
+      color: #1db954;
+      margin-top: 0;
+    }
+    button {
+      background: #1db954;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+    }
+    button:hover {
+      background: #1ed760;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+    }
+    .success { color: #1db954; }
+    .error { color: #ff4444; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test Fitur MyTube</h1>
+
+  <div class="test-section">
+    <h2>1. Test Sistem Favorit</h2>
+    <button onclick="testFavorite()">Test Tambah Favorit</button>
+    <button onclick="testRemoveFavorite()">Test Hapus Favorit</button>
+    <button onclick="showFavorites()">Lihat Favorit</button>
+    <button onclick="clearFavorites()">Clear Semua</button>
+    <div id="favoriteStatus" class="status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Test LocalStorage</h2>
+    <button onclick="testLocalStorage()">Test LocalStorage</button>
+    <div id="storageStatus" class="status"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Test Responsive</h2>
+    <p>Ukuran layar saat ini: <span id="screenSize"></span></p>
+    <p>Device type: <span id="deviceType"></span></p>
+    <button onclick="updateScreenInfo()">Update Info</button>
+  </div>
+
+  <div class="test-section">
+    <h2>4. Buka Aplikasi</h2>
+    <button onclick="window.open('index.html', '_blank')" style="font-size: 16px; padding: 15px 30px;">
+      🚀 Buka MyTube
+    </button>
+  </div>
+
+  <script>
+    function testFavorite() {
+      const testSongId = 'test-song-1';
+      let favorites = JSON.parse(localStorage.getItem('mytube_favorites')) || [];
+      
+      if (!favorites.includes(testSongId)) {
+        favorites.push(testSongId);
+        localStorage.setItem('mytube_favorites', JSON.stringify(favorites));
+        document.getElementById('favoriteStatus').innerHTML = 
+          '<span class="success">✅ Berhasil menambah favorit: ' + testSongId + '</span>';
+      } else {
+        document.getElementById('favoriteStatus').innerHTML = 
+          '<span class="error">⚠️ Lagu sudah ada di favorit</span>';
+      }
+    }
+
+    function testRemoveFavorite() {
+      const testSongId = 'test-song-1';
+      let favorites = JSON.parse(localStorage.getItem('mytube_favorites')) || [];
+      
+      if (favorites.includes(testSongId)) {
+        favorites = favorites.filter(id => id !== testSongId);
+        localStorage.setItem('mytube_favorites', JSON.stringify(favorites));
+        document.getElementById('favoriteStatus').innerHTML = 
+          '<span class="success">✅ Berhasil menghapus dari favorit</span>';
+      } else {
+        document.getElementById('favoriteStatus').innerHTML = 
+          '<span class="error">⚠️ Lagu tidak ada di favorit</span>';
+      }
+    }
+
+    function showFavorites() {
+      const favorites = JSON.parse(localStorage.getItem('mytube_favorites')) || [];
+      document.getElementById('favoriteStatus').innerHTML = 
+        '<span class="success">📁 Total favorit: ' + favorites.length + '<br>Data: ' + JSON.stringify(favorites) + '</span>';
+    }
+
+    function clearFavorites() {
+      localStorage.removeItem('mytube_favorites');
+      document.getElementById('favoriteStatus').innerHTML = 
+        '<span class="success">✅ Semua favorit dihapus</span>';
+    }
+
+    function testLocalStorage() {
+      try {
+        localStorage.setItem('test', 'value');
+        const value = localStorage.getItem('test');
+        localStorage.removeItem('test');
+        
+        if (value === 'value') {
+          document.getElementById('storageStatus').innerHTML = 
+            '<span class="success">✅ LocalStorage bekerja dengan baik</span>';
+        } else {
+          document.getElementById('storageStatus').innerHTML = 
+            '<span class="error">❌ LocalStorage error</span>';
+        }
+      } catch (e) {
+        document.getElementById('storageStatus').innerHTML = 
+          '<span class="error">❌ LocalStorage tidak tersedia: ' + e.message + '</span>';
+      }
+    }
+
+    function updateScreenInfo() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      document.getElementById('screenSize').textContent = width + ' x ' + height + ' px';
+      
+      let deviceType = 'Desktop';
+      if (width <= 380) deviceType = 'Very Small Phone';
+      else if (width <= 768) deviceType = 'Mobile';
+      else if (width <= 1024) deviceType = 'Tablet';
+      else if (width <= 1399) deviceType = 'Laptop';
+      else deviceType = 'Large Desktop';
+      
+      document.getElementById('deviceType').textContent = deviceType;
+    }
+
+    // Auto update on load
+    updateScreenInfo();
+    window.addEventListener('resize', updateScreenInfo);
+  </script>
+</body>
+</html>

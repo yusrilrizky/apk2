@@ -1,0 +1,117 @@
+✅ PERBAIKAN LAGU DEFAULT & UPLOAD
+====================================
+
+MASALAH YANG DIPERBAIKI:
+
+1. ❌ MASALAH: Lagu default hilang dari beranda
+   ✅ SOLUSI: 
+   - Lagu default (4 lagu) sekarang selalu muncul di beranda
+   - Ditambahkan tombol favorit ❤️ di setiap lagu default
+   - Lagu default: Anugerah Terindah, Saktane 2, Nanti Kita Seperti Ini, Cintanya Aku
+   - Banner/cover image tetap tampil (ya.jpg, ya1.jpg, nanti.jpg, 3.jpg)
+
+2. ❌ MASALAH: Upload error "no json"
+   ✅ SOLUSI:
+   - Upload.php diperbaiki untuk tidak error jika database tidak tersedia
+   - File tetap terupload ke folder uploads/audio/ dan uploads/banners/
+   - Response JSON selalu dikirim dengan benar
+   - Error handling lebih baik
+
+DETAIL PERBAIKAN:
+
+📁 FILE: index.html
+-------------------
+✅ Lagu default di HTML awal (baris 670-705):
+   - Ditambahkan data-song-id untuk setiap lagu
+   - Ditambahkan tombol favorit dengan onclick handler
+   - Cover image tetap ada (ya.jpg, ya1.jpg, nanti.jpg, 3.jpg)
+
+✅ Function renderSongs() (baris 1040-1100):
+   - Selalu render 4 lagu default terlebih dahulu
+   - Kemudian tambahkan lagu dari database (jika ada)
+   - Load favorites setelah render
+
+✅ Function loadSongs() (baris 977-990):
+   - Jika API error, tetap panggil renderSongs([])
+   - Lagu default tetap muncul meski database error
+
+📁 FILE: api/upload.php
+-----------------------
+✅ Perbaikan error handling:
+   - Tidak require database di awal (pakai try-catch)
+   - File audio dan banner tetap terupload
+   - Jika database tidak tersedia, file tetap tersimpan
+   - Response JSON selalu valid
+
+✅ Path handling:
+   - Menggunakan __DIR__ untuk path absolut
+   - Folder otomatis dibuat jika belum ada
+   - Banner default jika tidak diupload
+
+📁 FILE: api/songs.php
+----------------------
+✅ Perbaikan error handling:
+   - Jika database error, return empty array []
+   - Tidak crash aplikasi
+   - Response JSON selalu valid
+
+CARA MENGGUNAKAN:
+
+1. LIHAT LAGU DEFAULT:
+   - Buka index.html
+   - 4 lagu default langsung muncul di beranda
+   - Klik ❤️ untuk tambah ke favorit
+
+2. UPLOAD LAGU BARU:
+   - Klik tombol "📤 Upload" atau menu Upload
+   - Isi form:
+     * Judul lagu (wajib)
+     * Nama artis (wajib)
+     * Banner/cover image (opsional)
+     * File audio MP3/WAV (wajib)
+   - Klik "Upload Lagu"
+   - Lagu muncul di beranda
+
+3. JIKA UPLOAD ERROR:
+   - Pastikan folder uploads/ ada dan writable
+   - Cek ukuran file (max 10MB recommended)
+   - Cek format file (MP3, WAV, OGG, M4A)
+   - Lihat console browser (F12) untuk detail error
+
+STRUKTUR FOLDER UPLOAD:
+-----------------------
+uploads/
+├── audio/          # File MP3/audio
+│   └── [timestamp]_[random].mp3
+└── banners/        # Cover image
+    └── [timestamp]_[random].jpg
+
+LAGU DEFAULT YANG MUNCUL:
+--------------------------
+1. Anugerah Terindah - Andmesh Kamaleng (ya.jpg)
+2. Saktane 2 - Yadesta (ya1.jpg)
+3. Nanti Kita Seperti Ini - Batas Senja (nanti.jpg)
+4. Cintanya Aku - Arsy Widianto & Tiara Andini (3.jpg)
+
+FITUR YANG BEKERJA:
+-------------------
+✅ 4 lagu default selalu muncul
+✅ Cover/banner image tampil
+✅ Tombol favorit ❤️ di semua lagu
+✅ Upload MP3 dengan banner
+✅ Upload tanpa database (file-based)
+✅ Response JSON valid
+✅ Error handling baik
+✅ Folder otomatis dibuat
+
+TESTING:
+--------
+1. Buka index.html
+2. Cek 4 lagu default muncul dengan cover image
+3. Klik ❤️ untuk test favorit
+4. Klik Upload untuk test upload
+5. Upload file MP3 dengan banner
+6. Lagu baru muncul di beranda
+
+TANGGAL: 8 Februari 2026
+STATUS: ✅ SELESAI - LAGU DEFAULT & UPLOAD BEKERJA

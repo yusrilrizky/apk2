@@ -1,0 +1,132 @@
+🚀 CARA MENJALANKAN SERVER PHP - MyTube
+=========================================
+
+SERVER PHP SUDAH BERJALAN! ✅
+Server: http://localhost:8000
+Status: RUNNING
+
+CARA MENGGUNAKAN:
+-----------------
+
+1. BUKA APLIKASI:
+   - Buka browser (Chrome/Firefox/Edge)
+   - Ketik: http://localhost:8000/index.html
+   - Atau klik file: BUKA_MYTUBE.bat
+
+2. TEST UPLOAD:
+   - Buka: http://localhost:8000/test-upload.html
+   - Upload file MP3 dengan banner
+   - Lihat hasilnya di MyTube
+
+3. STOP SERVER:
+   - Tekan Ctrl+C di terminal/command prompt
+   - Atau tutup window terminal
+
+CARA JALANKAN ULANG SERVER:
+----------------------------
+
+OPSI 1 - Double Click:
+   - Double click file: start-server.bat
+   - Server otomatis jalan di http://localhost:8000
+
+OPSI 2 - Command Prompt:
+   - Buka CMD di folder ini
+   - Ketik: php -S localhost:8000
+   - Tekan Enter
+
+OPSI 3 - PowerShell:
+   - Buka PowerShell di folder ini
+   - Ketik: php -S localhost:8000
+   - Tekan Enter
+
+CEK SERVER BERJALAN:
+--------------------
+- Buka browser
+- Ketik: http://localhost:8000
+- Jika muncul halaman, server sudah jalan ✅
+- Jika error "can't connect", server belum jalan ❌
+
+TROUBLESHOOTING:
+----------------
+
+❌ Error: "php is not recognized"
+   Solusi: Install PHP terlebih dahulu
+   Download: https://windows.php.net/download/
+
+❌ Error: "Address already in use"
+   Solusi: Port 8000 sudah dipakai
+   Ganti port: php -S localhost:8080
+
+❌ Error: "Permission denied" saat upload
+   Solusi: 
+   - Pastikan folder uploads/ ada
+   - Cek permission folder (harus writable)
+   - Jalankan CMD/PowerShell sebagai Administrator
+
+❌ Upload gagal "no json"
+   Solusi:
+   - Pastikan server PHP berjalan
+   - Buka http://localhost:8000 (bukan file://)
+   - Cek folder uploads/audio/ dan uploads/banners/ ada
+
+STRUKTUR FOLDER:
+----------------
+MyTube/
+├── index.html              ← Aplikasi utama
+├── test-upload.html        ← Test upload
+├── start-server.bat        ← Jalankan server
+├── api/
+│   ├── upload.php          ← Handler upload
+│   ├── songs.php           ← Get songs
+│   └── user.php            ← User management
+├── uploads/
+│   ├── audio/              ← File MP3 (auto created ✅)
+│   └── banners/            ← Cover image (auto created ✅)
+└── config/
+    ├── database.php        ← DB config
+    └── setup.php           ← DB setup
+
+FITUR YANG BEKERJA:
+-------------------
+✅ Server PHP berjalan di localhost:8000
+✅ Folder uploads/audio/ dibuat
+✅ Folder uploads/banners/ dibuat
+✅ Upload MP3 dengan banner
+✅ 4 lagu default tampil
+✅ Sistem favorit
+✅ Pencarian musik (iTunes API)
+✅ Radio streaming
+✅ Responsive mobile & laptop
+
+QUICK START:
+------------
+1. Double click: start-server.bat
+2. Buka browser: http://localhost:8000/index.html
+3. Enjoy! 🎵
+
+CATATAN PENTING:
+----------------
+⚠️ JANGAN buka file index.html langsung (file://)
+✅ HARUS buka lewat http://localhost:8000/index.html
+   Alasan: Upload butuh server PHP untuk bekerja
+
+⚠️ Server harus tetap jalan saat pakai aplikasi
+✅ Jangan tutup window CMD/PowerShell
+
+⚠️ Jika restart komputer, jalankan ulang server
+✅ Double click start-server.bat lagi
+
+LINK CEPAT:
+-----------
+🏠 MyTube: http://localhost:8000/index.html
+📤 Test Upload: http://localhost:8000/test-upload.html
+🧪 Test Fitur: http://localhost:8000/TEST_FITUR.html
+
+STATUS SAAT INI:
+----------------
+✅ Server PHP: RUNNING
+✅ Port: 8000
+✅ Folder uploads: READY
+✅ Aplikasi: READY TO USE
+
+Selamat menggunakan MyTube! 🎉

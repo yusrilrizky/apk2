@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | MyTube</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
+    url("eh.jpg") center/cover no-repeat;
+  color:white;
+}
+
+/* CARD */
+.login-card{
+  width:100%;
+  max-width:380px;
+  background:rgba(20,20,20,.9);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+/* IMAGE */
+.login-image{
+  height:150px;
+  background:url("ga.jpg") center/cover no-repeat;
+}
+
+/* CONTENT */
+.login-content{
+  padding:22px;
+  text-align:center;
+}
+
+.logo{
+  font-size:26px;
+  color:#1db954;
+}
+.logo span{ color:white; }
+
+.subtitle{
+  font-size:14px;
+  color:#aaa;
+  margin-bottom:15px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#1db954;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+.toggle{
+  margin-top:14px;
+  font-size:13px;
+  color:#ccc;
+  cursor:pointer;
+}
+.toggle span{
+  color:#1db954;
+  font-weight:bold;
+}
+
+.music-control{
+  margin-top:12px;
+  font-size:13px;
+  color:#1db954;
+  cursor:pointer;
+}
+
+.error{
+  color:#ff5c5c;
+  font-size:13px;
+  display:none;
+  margin-bottom:8px;
+}
+
+.success{
+  color:#1db954;
+  font-size:13px;
+  display:none;
+  margin-bottom:8px;
+}
+
+.otp-display{
+  display:none;
+  background:linear-gradient(135deg, #1db954, #1ed760);
+  padding:20px;
+  border-radius:12px;
+  margin:16px 0;
+  text-align:center;
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%, 100%{ transform:scale(1); }
+  50%{ transform:scale(1.02); }
+}
+
+.otp-display h3{
+  color:black;
+  font-size:16px;
+  margin-bottom:12px;
+}
+
+.otp-code-box{
+  background:black;
+  color:#1db954;
+  font-size:32px;
+  font-weight:bold;
+  letter-spacing:8px;
+  padding:16px;
+  border-radius:8px;
+  margin:12px 0;
+  font-family:monospace;
+}
+
+.otp-info{
+  color:rgba(0,0,0,0.8);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.otp-section{
+  display:none;
+  margin-top:10px;
+}
+
+.resend-otp{
+  margin-top:10px;
+  font-size:12px;
+  color:#1db954;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+/* FOOTER */
+.footer-login{
+  margin-top:16px;
+  font-size:11px;
+  color:#aaa;
+}
+.footer-login a{
+  color:#1db954;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="loginMusic" autoplay loop>
+  <source src="no.mp3" type="audio/mpeg">
+</audio>
+
+<div class="login-card">
+
+  <div class="login-image"></div>
+
+  <div class="login-content">
+    <div class="logo">My<span>Tube</span></div>
+    <div class="subtitle" id="formTitle">Masuk ke akun kamu</div>
+
+    <div class="error" id="errorMsg"></div>
+    <div class="success" id="successMsg"></div>
+
+    <!-- OTP DISPLAY BOX (Mobile Friendly) -->
+    <div class="otp-display" id="otpDisplay">
+      <h3>🔑 KODE OTP ANDA</h3>
+      <div class="otp-code-box" id="otpCodeDisplay">------</div>
+      <div class="otp-info">✅ Kode sudah terisi otomatis<br>Klik tombol di bawah untuk verifikasi</div>
+    </div>
+
+    <!-- LOGIN/REGISTER FORM -->
+    <div id="mainForm">
+      <input id="username" placeholder="Username">
+      <input id="email" type="email" placeholder="Email (untuk verifikasi)" style="display:none;">
+      <input id="password" type="password" placeholder="Password">
+      
+      <!-- OTP SECTION -->
+      <div class="otp-section" id="otpSection">
+        <input id="otpCode" placeholder="Masukkan kode OTP" maxlength="6">
+        <div class="resend-otp" onclick="resendOTP()">Kirim ulang kode</div>
+      </div>
+
+      <button onclick="submitForm()" id="submitBtn">Masuk</button>
+    </div>
+
+    <div class="toggle" onclick="toggleMode()">
+      Belum punya akun? <span id="toggleText">Daftar</span>
+    </div>
+
+    <div class="music-control" onclick="toggleMusic()">🎵 Play / Pause Musik</div>
+
+    
+    <div class="footer-login">
+      © 2026 MyTube <br>
+      Kontak Admin:
+      <a href="https://wa.me/6282297706541?text=Hai%20save%20dong" target="_blank">
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* MUSIC */
+const music = document.getElementById("loginMusic");
+music.volume = 0.4;
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
+}
+
+/* LOGIN */
+let isLogin = true;
+let otpSent = false;
+let currentEmail = '';
+const title = document.getElementById("formTitle");
+const toggleText = document.getElementById("toggleText");
+const errorMsg = document.getElementById("errorMsg");
+const successMsg = document.getElementById("successMsg");
+const emailInput = document.getElementById("email");
+const otpSection = document.getElementById("otpSection");
+const submitBtn = document.getElementById("submitBtn");
+
+function toggleMode(){
+  isLogin = !isLogin;
+  otpSent = false;
+  title.innerText = isLogin ? "Masuk ke akun kamu" : "Buat akun baru";
+  toggleText.innerText = isLogin ? "Daftar" : "Masuk";
+  emailInput.style.display = isLogin ? "none" : "block";
+  otpSection.style.display = "none";
+  document.getElementById("otpDisplay").style.display = "none";
+  submitBtn.textContent = "Masuk";
+  hideMessages();
+}
+
+async function submitForm(){
+  const u = username.value.trim();
+  const p = password.value.trim();
+  const e = email.value.trim();
+
+  if(!u || !p){
+    showError("Username & password wajib diisi");
+    return;
+  }
+
+  if(isLogin){
+    // LOGIN
+    if(u === localStorage.getItem("mytube_user") &&
+       p === localStorage.getItem("mytube_pass")){
+      sessionStorage.setItem("mytube_login","true");
+      location.href="index.html";
+    }else{
+      showError("Login gagal. Username atau password salah.");
+    }
+  }else{
+    // REGISTER
+    if(!e){
+      showError("Email wajib diisi untuk verifikasi");
+      return;
+    }
+
+    if(!otpSent){
+      // Kirim OTP
+      await sendOTP(e);
+    }else{
+      // Verifikasi OTP
+      const otp = document.getElementById("otpCode").value.trim();
+      if(!otp){
+        showError("Masukkan kode OTP");
+        return;
+      }
+      await verifyOTP(e, otp, u, p);
+    }
+  }
+}
+
+async function sendOTP(email){
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Mengirim kode...";
+  hideMessages();
+
+  try{
+    const formData = new FormData();
+    formData.append('email', email);
+
+    const response = await fetch('api/send-otp.php', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if(result.success){
+      otpSent = true;
+      currentEmail = email;
+      otpSection.style.display = "block";
+      submitBtn.textContent = "Verifikasi & Daftar";
+      
+      // Tampilkan kode OTP di box visual (Mobile Friendly!)
+      if(result.otp_code){
+        const otpDisplay = document.getElementById("otpDisplay");
+        const otpCodeDisplay = document.getElementById("otpCodeDisplay");
+        
+        // Show OTP display box
+        otpDisplay.style.display = "block";
+        otpCodeDisplay.textContent = result.otp_code;
+        
+        // Auto-fill OTP code
+        document.getElementById("otpCode").value = result.otp_code;
+        
+        // Show success message
+        showSuccess("✅ Kode OTP berhasil dibuat! Lihat kotak hijau di atas.");
+        
+        // Scroll to OTP display (for mobile)
+        setTimeout(() => {
+          otpDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }else{
+      showError(result.message);
+    }
+  }catch(error){
+    showError("Error: " + error.message);
+  }finally{
+    submitBtn.disabled = false;
+  }
+}
+
+async function verifyOTP(email, otp, username, password){
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Memverifikasi...";
+  hideMessages();
+
+  try{
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('otp', otp);
+
+    const response = await fetch('api/verify-otp.php', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if(result.success){
+      // Simpan data user
+      localStorage.setItem("mytube_user", username);
+      localStorage.setItem("mytube_pass", password);
+      localStorage.setItem("mytube_email", email);
+      
+      // Hide OTP display
+      document.getElementById("otpDisplay").style.display = "none";
+      
+      showSuccess("✅ Registrasi berhasil! Mengalihkan ke login...");
+      
+      setTimeout(() => {
+        otpSent = false;
+        toggleMode();
+        document.getElementById("username").value = username;
+        document.getElementById("password").value = "";
+      }, 2000);
+    }else{
+      showError(result.message);
+    }
+  }catch(error){
+    showError("Error: " + error.message);
+  }finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Verifikasi & Daftar";
+  }
+}
+
+async function resendOTP(){
+  if(currentEmail){
+    await sendOTP(currentEmail);
+  }
+}
+
+function showError(msg){
+  errorMsg.innerText = msg;
+  errorMsg.style.display = "block";
+  successMsg.style.display = "none";
+}
+
+function showSuccess(msg){
+  successMsg.innerText = msg;
+  successMsg.style.display = "block";
+  errorMsg.style.display = "none";
+}
+
+function hideMessages(){
+  errorMsg.style.display = "none";
+  successMsg.style.display = "none";
+}
+</script>
+
+</body>
+</html>

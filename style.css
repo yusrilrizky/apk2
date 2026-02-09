@@ -1,0 +1,224 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= BACKGROUND DASHBOARD ================= */
+.yt {
+  min-height: 100vh;
+  color: white;
+  background-image: url("oh.jpg"); /* FOTO BACKGROUND */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ================= TOPBAR ================= */
+.topbar {
+  height:55px;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  color:#1db954;
+  font-size:22px;
+  margin:0;
+}
+.logo span {
+  color:white;
+}
+
+/* ================= LAYOUT ================= */
+.yt-layout {
+  display:flex;
+  min-height: calc(100vh - 55px);
+}
+
+/* ================= SIDEBAR ================= */
+.yt-sidebar {
+  width:200px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+}
+
+.yt-sidebar a {
+  display:block;
+  padding:14px 20px;
+  color:white;
+  text-decoration:none;
+  border-radius:6px;
+  font-size:14px;
+  transition:0.2s;
+}
+
+.yt-sidebar a.active,
+.yt-sidebar a:hover {
+  background:#1db954;
+  color:#000;
+  font-weight:bold;
+}
+
+/* ================= CONTENT ================= */
+.yt-content {
+  flex:1;
+  padding:20px;
+}
+
+/* ================= SEARCH ================= */
+.search-box{
+  width:100%;
+  max-width:320px;
+  padding:10px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  font-size:14px;
+}
+
+/* ================= GRID ================= */
+.video-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:15px;
+}
+
+/* ================= CARD ================= */
+.video-link{
+  text-decoration:none;
+  color:white;
+}
+
+.video-card {
+  background: rgba(0,0,0,0.55);
+  padding:10px;
+  border-radius:14px;
+  color:white;
+  transition:0.2s;
+}
+
+.video-card:hover{
+  transform: translateY(-4px);
+  background: rgba(0,0,0,0.7);
+}
+
+.thumb {
+  width:100%;
+  aspect-ratio:16/9;
+  background-size:cover;
+  background-position:center;
+  border-radius:10px;
+}
+
+/* ================= TEXT ================= */
+.video-card h3 {
+  margin:8px 0 3px;
+  font-size:14px;
+}
+.video-card p {
+  font-size:12px;
+  color:#ddd;
+}
+
+/* ================= BUTTON ================= */
+.video-card button{
+  width:100%;
+  margin-top:6px;
+  padding:7px;
+  border:none;
+  border-radius:10px;
+  background:#1db954;
+  color:black;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-delete{
+  background:#ff4d4d;
+  color:white;
+}
+
+/* ================= PLAYER ================= */
+.song-logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 16px;
+  object-fit: cover;
+  margin: 0 auto 15px;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+audio{
+  width:100%;
+}
+
+/* ================= LYRICS ================= */
+.lyrics{
+  max-height: 220px;
+  overflow-y: auto;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  margin-top:18px;
+  font-size:12px;
+  color:#aaa;
+  text-align:center;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* TABLET & HP */
+@media (max-width: 768px){
+  .yt-layout{
+    flex-direction: column;
+  }
+
+  .yt-sidebar{
+    width:100%;
+    display:flex;
+    overflow-x:auto;
+  }
+
+  .yt-sidebar a{
+    flex:1;
+    text-align:center;
+    font-size:13px;
+    white-space:nowrap;
+  }
+
+  .yt-content{
+    padding:14px;
+  }
+
+  .video-grid{
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* HP KECIL */
+@media (max-width: 480px){
+  .logo{
+    font-size:18px;
+  }
+
+  .video-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .song-logo{
+    width:120px;
+    height:120px;
+  }
+}

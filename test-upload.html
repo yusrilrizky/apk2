@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Upload - MyTube</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: white;
+    }
+    h1 {
+      color: #1db954;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #1db954;
+    }
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      background: #282828;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #1db954;
+      color: black;
+      border: none;
+      border-radius: 24px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #1ed760;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #282828;
+      border-left: 4px solid #1db954;
+    }
+    .success {
+      border-left-color: #1db954;
+    }
+    .error {
+      border-left-color: #ff4444;
+    }
+    .preview {
+      width: 200px;
+      height: 200px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      background-color: #282828;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test Upload Lagu</h1>
+
+  <form id="uploadForm">
+    <div class="form-group">
+      <label>Judul Lagu *</label>
+      <input type="text" id="title" name="title" placeholder="Contoh: Bohemian Rhapsody" required>
+    </div>
+
+    <div class="form-group">
+      <label>Nama Artis *</label>
+      <input type="text" id="artist" name="artist" placeholder="Contoh: Queen" required>
+    </div>
+
+    <div class="form-group">
+      <label>Banner/Cover Image (Opsional)</label>
+      <input type="file" id="banner" name="banner" accept="image/*" onchange="previewImage()">
+      <div id="preview" class="preview"></div>
+    </div>
+
+    <div class="form-group">
+      <label>File Audio (MP3/WAV) *</label>
+      <input type="file" id="audio" name="audio" accept="audio/*" required>
+    </div>
+
+    <button type="submit" id="submitBtn">📤 Upload Lagu</button>
+    <button type="button" onclick="window.open('index.html', '_blank')" style="background: #444; margin-top: 10px;">
+      🏠 Buka MyTube
+    </button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function previewImage() {
+      const file = document.getElementById('banner').files[0];
+      const preview = document.getElementById('preview');
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.style.backgroundImage = `url('${e.target.result}')`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const resultDiv = document.getElementById('result');
+      
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Uploading...';
+      
+      // Create FormData
+      const formData = new FormData();
+      formData.append('title', document.getElementById('title').value);
+      formData.append('artist', document.getElementById('artist').value);
+      
+      const bannerFile = document.getElementById('banner').files[0];
+      if (bannerFile) {
+        formData.append('banner', bannerFile);
+      }
+      
+      const audioFile = document.getElementById('audio').files[0];
+      formData.append('audio', audioFile);
+      
+      try {
+        const response = await fetch('api/upload.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          resultDiv.className = 'result success';
+          resultDiv.innerHTML = `
+            <h3 style="color: #1db954; margin-top: 0;">✅ Upload Berhasil!</h3>
+            <p><strong>Judul:</strong> ${result.data.title}</p>
+            <p><strong>Artis:</strong> ${result.data.artist}</p>
+            <p><strong>Audio:</strong> ${result.data.audio}</p>
+            <p><strong>Banner:</strong> ${result.data.banner}</p>
+            <button onclick="window.open('index.html', '_blank')" style="margin-top: 10px;">
+              🎵 Lihat di MyTube
+            </button>
+          `;
+          
+          // Reset form
+          document.getElementById('uploadForm').reset();
+          document.getElementById('preview').style.backgroundImage = '';
+        } else {
+          resultDiv.className = 'result error';
+          resultDiv.innerHTML = `
+            <h3 style="color: #ff4444; margin-top: 0;">❌ Upload Gagal</h3>
+            <p>${result.message}</p>
+          `;
+        }
+      } catch (error) {
+        resultDiv.className = 'result error';
+        resultDiv.innerHTML = `
+          <h3 style="color: #ff4444; margin-top: 0;">❌ Error</h3>
+          <p>${error.message}</p>
+          <p style="font-size: 12px; color: #888; margin-top: 10px;">
+            Pastikan server PHP berjalan dan folder uploads/ ada dengan permission yang benar.
+          </p>
+        `;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '📤 Upload Lagu';
+      }
+    });
+  </script>
+</body>
+</html>

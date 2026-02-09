@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Anugerah Terindah</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  color:white;
+  background:#000;
+}
+
+/* ===== BANNER ===== */
+.banner{
+  height:45vh;
+  background:
+    linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.9)),
+    url("1.jpg") center/cover no-repeat;
+}
+
+/* BACK */
+.back{
+  position:absolute;
+  top:15px;
+  left:15px;
+  color:#1db954;
+  text-decoration:none;
+  font-weight:bold;
+  z-index:2;
+}
+
+/* PLAYER */
+.player{
+  max-width:420px;
+  margin:-120px auto 40px;
+  background:rgba(15,15,15,.88);
+  backdrop-filter: blur(14px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+/* COVER */
+.song-logo{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:16px;
+  display:block;
+  margin:-80px auto 15px;
+  box-shadow:0 15px 40px rgba(0,0,0,.8);
+}
+
+/* TITLE */
+h1{
+  margin:10px 0 5px;
+  font-size:24px;
+  text-align:center;
+}
+
+.artist{
+  color:#ccc;
+  font-size:14px;
+  margin-bottom:15px;
+  text-align:center;
+}
+
+/* AUDIO */
+audio{
+  width:100%;
+  margin-bottom:15px;
+}
+
+/* NEXT */
+.next-btn{
+  width:100%;
+  padding:12px;
+  background:#1db954;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* LYRICS */
+.lyrics{
+  margin-top:20px;
+}
+
+.lyrics p{
+  margin:10px 0;
+  font-size:16px;
+  color:#aaa;
+  text-align:center;
+  transition:.3s;
+}
+
+.lyrics p.active{
+  color:#1db954;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<a href="index.html" class="back">← Kembali</a>
+
+<div class="banner"></div>
+
+<div class="player">
+
+  <img src="1.jpg" class="song-logo">
+
+  <h1>Anugerah Terindah</h1>
+  <div class="artist">Andmesh Kamaleng</div>
+
+  <audio id="audio" controls>
+    <source src="anugerah.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="next-btn" id="nextBtn">⏭ Next</button>
+
+  <div class="lyrics">
+    <p data-time="0">Ho-wo</p>
+    <p data-time="4">Sakiti, ho-wo-oh-ho</p>
+    <p data-time="9">Ku ingin kau jadi milikku</p>
+    <p data-time="14">Temani diriku seumur hidupku</p>
+    <p data-time="19">Dan ku berjanji tak akan sakiti</p>
+    <p data-time="25">Kau yang kucinta sepenuh hati</p>
+    <p data-time="30">Biarkan semua manusia jadi saksi nyata</p>
+    <p data-time="37">Bahwa memilikimu adalah</p>
+    <p data-time="41">Anugerah terindah untuk diriku</p>
+  </div>
+
+</div>
+
+<script>
+const audio = document.getElementById("audio");
+const lines = document.querySelectorAll(".lyrics p");
+const nextBtn = document.getElementById("nextBtn");
+
+audio.addEventListener("timeupdate", () => {
+  const current = audio.currentTime;
+
+  lines.forEach((line, i) => {
+    const start = Number(line.dataset.time);
+    const next = lines[i + 1]?.dataset.time ?? 999;
+
+    if (current >= start && current < next) {
+      lines.forEach(l => l.classList.remove("active"));
+      line.classList.add("active");
+    }
+  });
+});
+
+nextBtn.addEventListener("click", () => {
+  window.location.href = "saktane2.html";
+});
+</script>
+
+</body>
+</html>

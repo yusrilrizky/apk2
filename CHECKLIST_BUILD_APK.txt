@@ -1,0 +1,175 @@
+========================================
+  CHECKLIST BUILD APK - MyTube Flutter
+========================================
+
+Gunakan checklist ini untuk memastikan build APK berhasil!
+
+========================================
+  PERSIAPAN
+========================================
+
+☑️ Flutter sudah terinstall
+   Test: flutter --version
+
+☑️ Android Studio sudah terinstall (opsional)
+   Atau: Android SDK sudah terinstall
+
+☑️ Folder mytube_app sudah ada
+   Lokasi: [workspace]/mytube_app/
+
+☑️ Server PHP sudah jalan (untuk testing)
+   Command: php -S 0.0.0.0:8000
+
+========================================
+  KONFIGURASI
+========================================
+
+☑️ URL sudah dikonfigurasi
+   File: mytube_app/lib/config/app_config.dart
+   Baris: 18
+   
+   EMULATOR: http://10.0.2.2:8000/login.html ✓
+   HP FISIK: http://[IP_KOMPUTER]:8000/login.html
+   PRODUCTION: https://yourdomain.com/login.html
+
+☑️ Internet permission sudah ada
+   File: mytube_app/android/app/src/main/AndroidManifest.xml
+   ✓ INTERNET permission
+   ✓ ACCESS_NETWORK_STATE permission
+   ✓ usesCleartextTraffic="true"
+
+☑️ App name sudah benar
+   AndroidManifest.xml: android:label="MyTube" ✓
+
+========================================
+  BUILD PROCESS
+========================================
+
+STEP 1: Masuk folder
+☑️ cd mytube_app
+
+STEP 2: Get dependencies
+☑️ flutter pub get
+   Tunggu sampai selesai (1-2 menit)
+
+STEP 3: Build APK
+☑️ flutter build apk --release
+   Tunggu sampai selesai (5-10 menit)
+
+STEP 4: Cek APK
+☑️ APK ada di: build/app/outputs/flutter-apk/app-release.apk
+☑️ Ukuran: ±15 MB
+
+========================================
+  TESTING
+========================================
+
+TESTING DI EMULATOR:
+☑️ Server PHP jalan: php -S 0.0.0.0:8000
+☑️ URL: http://10.0.2.2:8000/login.html
+☑️ flutter run
+☑️ App terbuka & load login.html
+☑️ Bisa login/register
+☑️ Bisa putar musik
+☑️ Favorit tersimpan
+
+TESTING DI HP FISIK:
+☑️ Server PHP jalan: php -S 0.0.0.0:8000
+☑️ Cek IP komputer: ipconfig
+☑️ Ganti URL di app_config.dart
+☑️ flutter build apk --release
+☑️ Kirim APK ke HP
+☑️ Install APK
+☑️ HP & komputer 1 WiFi
+☑️ App terbuka & load login.html
+☑️ Bisa login/register
+☑️ Bisa putar musik
+☑️ Favorit tersimpan
+
+========================================
+  TROUBLESHOOTING
+========================================
+
+JIKA BUILD GAGAL:
+☑️ flutter clean
+☑️ flutter pub get
+☑️ flutter build apk --release
+
+JIKA APP TIDAK BISA KONEKSI:
+☑️ Cek server PHP jalan
+☑️ Test URL di browser
+☑️ Cek internet permission (sudah ada!)
+☑️ Cek cleartext traffic (sudah enabled!)
+☑️ Untuk HP: cek 1 WiFi
+
+JIKA APP BLANK/PUTIH:
+☑️ Cek URL sudah benar
+☑️ Cek server PHP jalan
+☑️ Cek internet permission (sudah ada!)
+
+========================================
+  DISTRIBUSI
+========================================
+
+☑️ Build Release APK
+☑️ Test di berbagai HP
+☑️ Backup APK
+☑️ Siap distribusi!
+
+========================================
+  FILE PENTING
+========================================
+
+☑️ mytube_app/lib/config/app_config.dart
+   → Konfigurasi URL
+
+☑️ mytube_app/android/app/src/main/AndroidManifest.xml
+   → Permissions & app config
+
+☑️ mytube_app/pubspec.yaml
+   → Dependencies
+
+☑️ BUILD_MYTUBE_APK.bat
+   → Build otomatis
+
+☑️ PANDUAN_MYTUBE_APP.txt
+   → Panduan lengkap
+
+☑️ STATUS_MYTUBE_APP.txt
+   → Status proyek
+
+========================================
+  QUICK COMMANDS
+========================================
+
+# Build Release APK
+cd mytube_app
+flutter pub get
+flutter build apk --release
+
+# Build Debug APK
+cd mytube_app
+flutter pub get
+flutter build apk --debug
+
+# Run di emulator/HP
+cd mytube_app
+flutter run
+
+# Clean build
+cd mytube_app
+flutter clean
+
+========================================
+  KESIMPULAN
+========================================
+
+✅ Semua konfigurasi sudah benar!
+✅ Proyek siap build!
+✅ Tinggal ikuti checklist di atas!
+
+========================================
+
+Selamat build APK! 🎵
+
+========================================

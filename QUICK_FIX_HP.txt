@@ -1,0 +1,99 @@
+========================================
+  QUICK FIX - APK TIDAK BISA TERHUBUNG
+========================================
+
+✅ MASALAH SUDAH DIPERBAIKI!
+
+URL sudah diganti ke: http://192.168.1.2:8000/login.html
+
+========================================
+  LANGKAH CEPAT (5 MENIT)
+========================================
+
+1️⃣ JALANKAN SERVER
+   
+   Double click: TEST_SERVER_HP.bat
+   
+   Atau manual:
+   php -S 0.0.0.0:8000
+   
+   ✅ Server jalan, jangan ditutup!
+
+---
+
+2️⃣ TEST DI BROWSER HP
+   
+   Buka Chrome di HP, akses:
+   http://192.168.1.2:8000/login.html
+   
+   ✅ Halaman login muncul? Lanjut!
+   ❌ Tidak muncul? Cek WiFi & firewall!
+
+---
+
+3️⃣ BUILD APK BARU
+   
+   Double click: REBUILD_APK_UNTUK_HP.bat
+   
+   Atau manual:
+   cd mytube_app
+   flutter build apk --release
+   
+   ✅ Tunggu 5-10 menit
+
+---
+
+4️⃣ INSTALL DI HP
+   
+   1. Kirim APK ke HP
+   2. Hapus app lama
+   3. Install APK baru
+   4. Buka app
+   
+   ✅ Selesai!
+
+========================================
+  PENTING!
+========================================
+
+✅ HP & komputer HARUS 1 WiFi!
+✅ Server HARUS jalan (jangan ditutup!)
+✅ Test di browser HP DULU sebelum install APK!
+
+========================================
+  JIKA MASIH GAGAL
+========================================
+
+1. Matikan firewall Windows sementara
+2. Restart server PHP
+3. Pastikan HP & komputer 1 WiFi
+4. Test ping dari HP ke 192.168.1.2
+
+========================================
+  FILE YANG SUDAH DIUBAH
+========================================
+
+✅ mytube_app/lib/config/app_config.dart
+   URL: http://192.168.1.2:8000/login.html
+
+========================================
+  BATCH FILES BARU
+========================================
+
+✅ TEST_SERVER_HP.bat
+   → Jalankan server untuk HP
+
+✅ REBUILD_APK_UNTUK_HP.bat
+   → Build APK baru dengan URL yang benar
+
+✅ CARA_TEST_DI_HP.txt
+   → Panduan lengkap testing di HP
+
+========================================
+
+IP Komputer: 192.168.1.2
+URL untuk HP: http://192.168.1.2:8000/login.html
+
+Selamat mencoba! 🎵
+
+========================================

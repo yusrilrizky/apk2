@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Nanti Kita Seperti Ini</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:white;
+  background:#000;
+}
+
+.banner{
+  height:45vh;
+  background:
+    linear-gradient(rgba(0,0,0,.3), rgba(0,0,0,.9)),
+    url("when.jpg") center/cover no-repeat;
+}
+
+.back{
+  position:absolute;
+  top:15px;
+  left:15px;
+  color:#1db954;
+  text-decoration:none;
+  font-weight:bold;
+  z-index:2;
+}
+
+.player{
+  max-width:420px;
+  margin:-120px auto 40px;
+  background:rgba(15,15,15,.88);
+  backdrop-filter: blur(14px);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.8);
+}
+
+.song-logo{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:16px;
+  display:block;
+  margin:-80px auto 15px;
+  box-shadow:0 15px 40px rgba(0,0,0,.8);
+}
+
+h1{
+  margin:10px 0 5px;
+  font-size:24px;
+  text-align:center;
+}
+
+.artist{
+  color:#ccc;
+  font-size:14px;
+  margin-bottom:15px;
+  text-align:center;
+}
+
+audio{
+  width:100%;
+  margin-bottom:20px;
+}
+
+.lyrics p{
+  margin:10px 0;
+  font-size:16px;
+  color:#aaa;
+  transition:.3s;
+  text-align:center;
+}
+
+.lyrics p.active{
+  color:#1db954;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<a href="index.html" class="back">← Kembali</a>
+
+<div class="banner"></div>
+
+<div class="player">
+
+  <img src="when.jpg" class="song-logo">
+
+  <h1>Nanti Kita Seperti Ini</h1>
+  <div class="artist">Yadesta</div>
+
+  <audio id="audio" controls>
+    <source src="nanti.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="lyrics">
+    <p data-time="0">Kini ku sudah yakin pada satu hati</p>
+    <p data-time="7"> </p>
+    <p data-time="8">Yang kurasa tepat untuk temani</p>
+    <p data-time="14">Sekarang hingga aku tua nanti</p>
+    <p data-time="17">Ingin punya rumah 'tuk tempat bermesra</p>
+    <p data-time="24">Kau dipanggil Ibu, sementara aku Ayah</p>
+    <p data-time="30">Bertukar cerita di ruang keluarga</p>
+    <p data-time="34">Bercengkerama dan menimang buah hati kita</p>
+    <p data-time="39">Sederhana</p>
+    <p data-time="44">Bahagia ini lengkap sudah</p>
+    <p data-time="49">Sama-sama</p>
+    <p data-time="56">Hingga nanti kita tutup mata</p>
+    <p data-time="59">Ha-ah-ah-ah</p>
+    <p data-time="61">Ha-ah-ah-ah</p>
+    <p data-time="62">Ha-ah-ah-ah</p>
+  </div>
+
+</div>
+
+<script>
+const audio = document.getElementById("audio");
+const lines = document.querySelectorAll(".lyrics p");
+
+audio.addEventListener("timeupdate", () => {
+  const current = audio.currentTime;
+
+  lines.forEach((line, i) => {
+    const start = Number(line.dataset.time);
+    const isLast = i === lines.length - 1;
+    const next = !isLast ? Number(lines[i + 1].dataset.time) : audio.duration;
+
+    if (current >= start && current < next) {
+      lines.forEach(l => l.classList.remove("active"));
+      line.classList.add("active");
+    }
+  });
+});
+</script>
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,303 @@
+✅ FITUR BARU - SKIP, RESTART & KEYBOARD SHORTCUTS
+===================================================
+
+FITUR YANG DITAMBAHKAN:
+-----------------------
+
+1. ✅ SKIP FORWARD (⏩)
+   - Maju 10 detik
+   - Klik tombol ⏩
+   - Atau tekan Arrow Right (→)
+
+2. ✅ SKIP BACKWARD (⏪)
+   - Mundur 10 detik
+   - Klik tombol ⏪
+   - Atau tekan Arrow Left (←)
+
+3. ✅ RESTART SONG (↺)
+   - Kembali ke 0:00
+   - Klik tombol ↺
+   - Atau tekan R
+
+4. ✅ KEYBOARD SHORTCUTS
+   - Space: Play/Pause
+   - Arrow Right (→): Maju 10 detik
+   - Arrow Left (←): Mundur 10 detik
+   - Arrow Up (↑): Volume naik
+   - Arrow Down (↓): Volume turun
+   - R: Restart lagu
+   - N: Next lagu
+   - P: Previous lagu
+
+TAMPILAN PLAYER BARU:
+---------------------
+
+┌────────────────────────────────────────────────────┐
+│ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │
+├────────────────────────────────────────────────────┤
+│                                                    │
+│ [Cover] Anugerah Terindah                         │
+│         Andmesh Kamaleng                           │
+│         🤍                                         │
+│                                                    │
+│         ⏮  ⏪  ↺  ⏸  ⏩  ⏭                        │
+│            1:23 / 3:45                             │
+│                                                    │
+│                                    🔊 ▓▓▓▓▓▓▓     │
+└────────────────────────────────────────────────────┘
+
+TOMBOL KONTROL:
+---------------
+
+⏮  Previous Song (Lagu Sebelumnya)
+⏪  Skip Backward (Mundur 10 Detik)
+↺   Restart Song (Kembali ke 0:00)
+⏸  Play/Pause
+⏩  Skip Forward (Maju 10 Detik)
+⏭  Next Song (Lagu Berikutnya)
+
+CARA MENGGUNAKAN:
+-----------------
+
+1. SKIP FORWARD (⏩):
+   - Klik tombol ⏩
+   - Atau tekan Arrow Right (→)
+   - Lagu maju 10 detik
+
+2. SKIP BACKWARD (⏪):
+   - Klik tombol ⏪
+   - Atau tekan Arrow Left (←)
+   - Lagu mundur 10 detik
+
+3. RESTART SONG (↺):
+   - Klik tombol ↺
+   - Atau tekan R
+   - Lagu kembali ke 0:00 dan auto-play
+
+4. KEYBOARD SHORTCUTS:
+   - Tekan Space untuk Play/Pause
+   - Tekan → untuk maju 10 detik
+   - Tekan ← untuk mundur 10 detik
+   - Tekan ↑ untuk volume naik
+   - Tekan ↓ untuk volume turun
+   - Tekan R untuk restart
+   - Tekan N untuk next
+   - Tekan P untuk previous
+
+CONTOH PENGGUNAAN:
+------------------
+
+Scenario 1: Skip Intro
+- Lagu mulai dengan intro 30 detik
+- Tekan → 3x (maju 30 detik)
+- Langsung ke bagian utama!
+
+Scenario 2: Replay Chorus
+- Chorus bagus di 1:30
+- Tekan R untuk restart
+- Tekan → beberapa kali sampai 1:30
+- Enjoy chorus!
+
+Scenario 3: Cepat Cari Bagian Favorit
+- Tekan → berkali-kali
+- Atau drag progress bar
+- Sampai ketemu bagian favorit
+
+Scenario 4: Kembali ke Awal
+- Lagu sudah di tengah
+- Tekan R
+- Langsung kembali ke 0:00!
+
+KEYBOARD SHORTCUTS LENGKAP:
+---------------------------
+
+PLAYBACK:
+- Space: Play/Pause
+- R: Restart (0:00)
+- N: Next song
+- P: Previous song
+
+SEEK:
+- Arrow Right (→): Maju 10 detik
+- Arrow Left (←): Mundur 10 detik
+
+VOLUME:
+- Arrow Up (↑): Volume +10%
+- Arrow Down (↓): Volume -10%
+
+TIPS KEYBOARD:
+--------------
+💡 Tahan → untuk skip cepat
+💡 Tahan ← untuk mundur cepat
+💡 Tekan R untuk instant restart
+💡 Tekan Space untuk quick pause
+
+KEUNGGULAN:
+-----------
+✅ Skip intro lagu
+✅ Cepat cari bagian favorit
+✅ Kembali ke awal dengan 1 klik
+✅ Keyboard shortcuts untuk power user
+✅ Smooth transitions
+✅ No lag
+
+TECHNICAL DETAILS:
+------------------
+
+Skip Forward:
+```javascript
+function skipForward() {
+  audio.currentTime = Math.min(
+    audio.currentTime + 10, 
+    audio.duration
+  );
+}
+```
+
+Skip Backward:
+```javascript
+function skipBackward() {
+  audio.currentTime = Math.max(
+    audio.currentTime - 10, 
+    0
+  );
+}
+```
+
+Restart:
+```javascript
+function restartSong() {
+  audio.currentTime = 0;
+  audio.play();
+}
+```
+
+Keyboard:
+```javascript
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') skipForward();
+  if (e.key === 'ArrowLeft') skipBackward();
+  // etc...
+});
+```
+
+PERBANDINGAN:
+-------------
+
+SEBELUMNYA:
+❌ Tidak bisa skip detik
+❌ Tidak bisa restart
+❌ Tidak ada keyboard shortcuts
+❌ Harus drag progress bar manual
+
+SEKARANG:
+✅ Skip 10 detik dengan 1 klik
+✅ Restart dengan 1 klik
+✅ Keyboard shortcuts lengkap
+✅ Multiple ways to control
+
+FITUR YANG BEKERJA:
+-------------------
+✅ Skip forward 10s (⏩)
+✅ Skip backward 10s (⏪)
+✅ Restart song (↺)
+✅ Keyboard shortcuts (Space, →, ←, ↑, ↓, R, N, P)
+✅ Smooth seeking
+✅ Auto-play after restart
+✅ Volume control via keyboard
+
+TESTING:
+--------
+
+Test Skip Forward:
+1. Putar lagu
+2. Klik ⏩
+3. Lagu maju 10 detik
+4. Tekan → (keyboard)
+5. Lagu maju 10 detik lagi
+
+Test Skip Backward:
+1. Lagu di tengah
+2. Klik ⏪
+3. Lagu mundur 10 detik
+4. Tekan ← (keyboard)
+5. Lagu mundur 10 detik lagi
+
+Test Restart:
+1. Lagu di tengah (1:30)
+2. Klik ↺
+3. Lagu kembali ke 0:00
+4. Auto-play
+5. Tekan R (keyboard)
+6. Restart lagi
+
+Test Keyboard:
+1. Tekan Space → Pause
+2. Tekan Space → Play
+3. Tekan → → Maju 10s
+4. Tekan ← → Mundur 10s
+5. Tekan ↑ → Volume naik
+6. Tekan ↓ → Volume turun
+7. Tekan R → Restart
+8. Tekan N → Next
+9. Tekan P → Previous
+
+CARA TEST:
+----------
+1. Buka: http://localhost:8000/index.html
+2. Login
+3. Putar lagu
+4. Test semua tombol:
+   - ⏩ (maju 10s)
+   - ⏪ (mundur 10s)
+   - ↺ (restart)
+5. Test keyboard shortcuts:
+   - Space, →, ←, ↑, ↓, R, N, P
+
+TIPS PENGGUNAAN:
+----------------
+💡 Skip intro: Tekan → beberapa kali
+💡 Replay chorus: Tekan R lalu → sampai chorus
+💡 Quick pause: Tekan Space
+💡 Volume cepat: Tekan ↑ atau ↓
+💡 Next cepat: Tekan N
+💡 Previous cepat: Tekan P
+
+KEAMANAN KEYBOARD:
+------------------
+✅ Tidak aktif saat ketik di input field
+✅ Tidak conflict dengan form
+✅ Hanya aktif saat player ada
+✅ Safe untuk semua browser
+
+FILE YANG DIUBAH:
+-----------------
+✅ index.html - Player HTML
+✅ skipForward() - New function
+✅ skipBackward() - New function
+✅ restartSong() - New function
+✅ Keyboard event listener - New
+
+ICON YANG DIGUNAKAN:
+--------------------
+⏮  Previous
+⏪  Skip Backward
+↺   Restart
+⏸  Pause
+▶  Play
+⏩  Skip Forward
+⏭  Next
+
+STATUS:
+-------
+✅ Skip forward: WORKING
+✅ Skip backward: WORKING
+✅ Restart: WORKING
+✅ Keyboard shortcuts: WORKING
+✅ All controls: WORKING
+
+TANGGAL: 8 Februari 2026
+VERSION: 2.7
+STATUS: Production Ready ✅
+
+Fitur Skip, Restart & Keyboard Shortcuts aktif! ⏩⏪↺⌨️

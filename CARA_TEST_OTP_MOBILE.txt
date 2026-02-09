@@ -1,0 +1,70 @@
+========================================
+  CARA TEST OTP DI MOBILE (ACODE)
+========================================
+
+LANGKAH 1: START SERVER
+------------------------
+1. Buka Acode di HP
+2. Klik file: BUKA_LOGIN.bat
+3. Pilih "Run" atau "Execute"
+4. Server akan jalan di: http://localhost:8000
+
+LANGKAH 2: BUKA DI BROWSER HP
+-----------------------------
+1. Buka browser di HP (Chrome/Firefox)
+2. Ketik: localhost:8000/login.html
+3. Atau klik link yang muncul di terminal
+
+LANGKAH 3: TEST REGISTRASI & OTP
+---------------------------------
+1. Klik "Daftar" di halaman login
+2. Isi form:
+   - Username: (terserah)
+   - Email: test@gmail.com (atau email apa saja)
+   - Password: (terserah)
+
+3. Klik tombol "Daftar"
+
+4. KODE OTP AKAN MUNCUL DI:
+   ✅ KOTAK HIJAU BESAR dengan kode 6 digit
+   ✅ Ukuran font besar (mudah dibaca di HP)
+   ✅ Animasi pulse (berkedip)
+   ✅ Auto-scroll ke kode OTP
+   ✅ Kode otomatis terisi di form
+
+5. Klik "Verifikasi & Daftar"
+
+6. Selesai! Akun terdaftar.
+
+FITUR BARU OTP MOBILE:
+-----------------------
+✅ Kotak hijau besar dengan background hitam
+✅ Kode OTP ukuran 32px (sangat besar)
+✅ Letter spacing lebar (mudah dibaca)
+✅ Animasi pulse untuk menarik perhatian
+✅ Auto-scroll otomatis ke kode
+✅ Tidak pakai alert() lagi (yang sering ke-block)
+✅ Responsive untuk semua ukuran HP
+
+TROUBLESHOOTING:
+----------------
+❌ Kode tidak muncul?
+   → Refresh halaman dan coba lagi
+   → Pastikan server jalan (cek terminal)
+
+❌ Server tidak jalan?
+   → Pastikan PHP sudah terinstall
+   → Coba jalankan manual: php -S localhost:8000
+
+❌ Tidak bisa buka di browser?
+   → Pastikan ketik: localhost:8000/login.html
+   → Jangan pakai https:// (pakai http://)
+
+CATATAN:
+--------
+- Kode OTP berlaku 5 menit
+- Kode OTP 6 digit angka
+- Kode otomatis terisi di form
+- Tinggal klik tombol verifikasi
+
+Selamat mencoba! 🎉
